@@ -14,6 +14,8 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
+        StartCoroutine(FollowTarget());
     }
 
     // Update is called once per frame
