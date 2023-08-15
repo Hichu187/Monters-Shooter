@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class GunController : MonoBehaviour
 {
     public static GunController instance;
@@ -18,7 +18,7 @@ public class GunController : MonoBehaviour
     //Muzzleflash
     public Image muzzleFlashImage;
     public Sprite[] flashes;
-
+    public TextMeshProUGUI ammo;
     //Aiming
     public Vector3 normalLocalPosition;
     public Vector3 aimingLocalPosition;
@@ -44,6 +44,7 @@ public class GunController : MonoBehaviour
         _currentAmmoInClip = clipSize;
         _ammoInReserve = reservedAmmoCapacity;
         _canShoot = true;
+        ammo.text = clipSize + "/" + clipSize;
     }
 
     private void Update()
@@ -119,9 +120,9 @@ public class GunController : MonoBehaviour
             try
             {
                 Debug.Log(hit.transform.name);
-                Rigidbody rb = hit.transform.GetComponent<Rigidbody>();
+                /*Rigidbody rb = hit.transform.GetComponent<Rigidbody>();
                 rb.constraints = RigidbodyConstraints.None;
-                rb.AddForce(transform.parent.transform.forward * 100);
+                rb.AddForce(transform.parent.transform.forward * 100);*/
 
                 hit.transform.GetComponent<EnemyData>().currentHp = hit.transform.GetComponent<EnemyData>().currentHp - damage;
             }
@@ -147,6 +148,7 @@ public class GunController : MonoBehaviour
         {
             _canShoot = false;
             _currentAmmoInClip--;
+            ammo.text = _currentAmmoInClip + "/" + clipSize;
             StartCoroutine(ShootGun());
         }
     }
@@ -167,6 +169,7 @@ public class GunController : MonoBehaviour
                 _currentAmmoInClip = clipSize;
                 _ammoInReserve -= amountNeeded;
             }
+            ammo.text = clipSize + "/" + clipSize;
         }
     }
     public void Aiming()
