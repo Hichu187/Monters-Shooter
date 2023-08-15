@@ -64,6 +64,7 @@ public class GunController : MonoBehaviour
         
         if(shootingBtnIsPress == true)
         {
+            movement.Walk_Speed = 2f;
             Shooting();
         }
     }
@@ -76,7 +77,7 @@ public class GunController : MonoBehaviour
 
             Vector3 desiredPosition = Vector3.Lerp(transform.localPosition, target, Time.deltaTime * aimSmoothing);
             Camera.main.DOFieldOfView(60, 1f);
-            movement.Walk_Speed = 5;
+            movement.Walk_Speed = 6;
             transform.localPosition = desiredPosition;
         }
         else
