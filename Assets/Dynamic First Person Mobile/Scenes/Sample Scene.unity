@@ -11353,6 +11353,26 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1009104867203816877, guid: 75e1724d6739d834da0c7d8b4aa2deff, type: 3}
+      propertyPath: gunData
+      value: 
+      objectReference: {fileID: 11400000, guid: 938942eb03f0ae342b1eeb68a9ef0c88, type: 2}
+    - target: {fileID: 1009104867203816877, guid: 75e1724d6739d834da0c7d8b4aa2deff, type: 3}
+      propertyPath: typeOfGun
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009104867203816877, guid: 75e1724d6739d834da0c7d8b4aa2deff, type: 3}
+      propertyPath: bulletRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009104867203816877, guid: 75e1724d6739d834da0c7d8b4aa2deff, type: 3}
+      propertyPath: _ammoInReserve
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009104867203816877, guid: 75e1724d6739d834da0c7d8b4aa2deff, type: 3}
+      propertyPath: reservedAmmoCapacity
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 1010323205192621373, guid: 75e1724d6739d834da0c7d8b4aa2deff, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1

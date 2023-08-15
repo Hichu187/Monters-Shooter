@@ -2,14 +2,25 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.ComponentModel;
+using DG.Tweening;
 public class GunController : MonoBehaviour
 {
     public static GunController instance;
-    [Header("Gun Settings")]
+
+    [Header("REFERENCE")]
+    public FirstPersonMobileTools.DynamicFirstPerson.MovementController movement;
+    public enum GunType {Rifles, Pistols, Shotguns, SniperRifles }
+    [Header("GUN DATA")]
+    public GunData scriptableGun;
+    [SerializeField]
+    GunType typeOfGun;
+    [Header("GUN SETTINGS")]
     public float fireRate = 0.1f;
     public int clipSize = 30;
-    public int reservedAmmoCapacity = 270;
+    public int reservedAmmoCapacity = 90;
     public int damage = 10;
+    public int bulletRange = 10;
     //Variables that change throughout code
     private bool _canShoot;
     private int _currentAmmoInClip;
@@ -64,16 +75,17 @@ public class GunController : MonoBehaviour
             Vector3 target = normalLocalPosition;
 
             Vector3 desiredPosition = Vector3.Lerp(transform.localPosition, target, Time.deltaTime * aimSmoothing);
-
+            Camera.main.DOFieldOfView(60, 1f);
+            movement.Walk_Speed = 5;
             transform.localPosition = desiredPosition;
         }
         else
         {
             Vector3 target = normalLocalPosition;
             target = aimingLocalPosition;
-
+            movement.Walk_Speed = 2f;
             Vector3 desiredPosition = Vector3.Lerp(transform.localPosition, target, Time.deltaTime * aimSmoothing);
-
+            Camera.main.DOFieldOfView(30, 1f);
             transform.localPosition = desiredPosition;
         }
 
@@ -115,15 +127,11 @@ public class GunController : MonoBehaviour
     private void RaycastForEnemy()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.parent.position, transform.parent.forward, out hit, 1 << LayerMask.NameToLayer("Enemy")))
+        if (Physics.Raycast(transform.parent.position, transform.parent.forward, out hit,bulletRange,1 << LayerMask.NameToLayer("Enemy")))
         {
             try
             {
                 Debug.Log(hit.transform.name);
-                /*Rigidbody rb = hit.transform.GetComponent<Rigidbody>();
-                rb.constraints = RigidbodyConstraints.None;
-                rb.AddForce(transform.parent.transform.forward * 100);*/
-
                 hit.transform.GetComponent<EnemyData>().currentHp = hit.transform.GetComponent<EnemyData>().currentHp - damage;
             }
             catch
@@ -169,11 +177,11 @@ public class GunController : MonoBehaviour
                 _currentAmmoInClip = clipSize;
                 _ammoInReserve -= amountNeeded;
             }
-            ammo.text = clipSize + "/" + clipSize;
+            ammo.text = _currentAmmoInClip + "/" + clipSize;
         }
     }
     public void Aiming()
     {
-        isAiming = !isAiming;
+        isAiming = !isAiming;   
     }
 }
